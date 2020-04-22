@@ -12,7 +12,7 @@ import android.graphics.PathEffect;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.annotation.Nullable;
+
 import android.util.AttributeSet;
 import android.view.Display;
 import android.view.View;
@@ -93,7 +93,7 @@ public class AnimatedTextView extends View
 		invalidate();
 	}
 
-    public void init(@Nullable AttributeSet attr)
+    public void init(AttributeSet attr)
     {
 		if(attr == null)return;
 		
