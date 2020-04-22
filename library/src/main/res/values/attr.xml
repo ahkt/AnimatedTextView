@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<resources>
+		
+		<declare-styleable name="AnimatedTextView">
+			<attr
+				name="atv_color"
+				format="color"
+				/>
+			<attr
+				name="atv_font"
+				format="string"
+			/>
+			<attr
+				name="atv_strokeWidth"
+				format="dimension"
+			/>
+			<attr
+				name="atv_text"
+				format="string"
+			/>
+			<attr
+				name="atv_textSize"
+				format="dimension"
+			/>
+		</declare-styleable>
+		
+	</resources>
