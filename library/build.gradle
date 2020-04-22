@@ -1,55 +1,25 @@
 apply plugin: 'com.android.library'
 
 android {
- 
- 
     compileSdkVersion 29
- 
- 
     buildToolsVersion "29.0.0"
- 
- 
- 
- 
+
     defaultConfig {
- 
- 
-        minSdkVersion 21
- 
- 
+        minSdkVersion 19
         targetSdkVersion 28
- 
- 
         versionCode Integer.parseInt(project.VERSION_CODE)
- 
- 
-        versionName project.VERSION_NAME 
- 
+        versionName project.VERSION_NAME
     }
- 
- 
     buildTypes {
- 
- 
         release {
- 
- 
             minifyEnabled false
- 
- 
             debuggable false
- 
         }
-  
- 
-        debug { 
- 
+
+        debug {
             minifyEnabled false
- 
             debuggable true
- 
         }
- 
     }
 }
 
