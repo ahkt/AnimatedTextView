@@ -3,6 +3,8 @@ Simple library which draws Text with an Animation.
 
 ### Dowload 
 
+[![](https://jitpack.io/v/itsaky/AnimatedTextView.svg)](https://jitpack.io/#itsaky/AnimatedTextView)
+
 Add to project's build.gradle
 ```
 maven { url 'https://jitpack.io' }
@@ -10,7 +12,7 @@ maven { url 'https://jitpack.io' }
 
 Add to module-level build.gradle
 ```
-implementation 'com.github.itsaky:AnimatedTextView:1.0'
+implementation 'com.github.itsaky:AnimatedTextView:<latest-version-here>'
 ```
 
 ### Usage
