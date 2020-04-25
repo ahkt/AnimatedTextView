@@ -1,7 +1,6 @@
 package com.itsaky.animatedtext;
 
 import android.animation.ObjectAnimator;
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -9,26 +8,23 @@ import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.PathEffect;
-import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-
 import android.util.AttributeSet;
-import android.view.Display;
 import android.view.View;
 
 public class AnimatedTextView extends View
 {
-    Paint paint;
-    float length;
-	TypedArray ta;
-	int midWidth, midHeight;
+    private Paint mPaint;
+	private TypedArray mTypedArray;
 	
 	private Typeface mTypeface;
-	private int color, strokeWidth;
-	private float textSize;
-	private String text;
-	private ObjectAnimator animator;
+	private int mColor, mStrokeWidth;
+	private float mTextSize;
+	private String mText;
+	private int mDuration;
+	
+	private ObjectAnimator mAnimator;
 	
     public AnimatedTextView(Context context)
     {
@@ -48,97 +44,118 @@ public class AnimatedTextView extends View
 		init(attrs);
     }
 
-	public void setMTypeface(Typeface mTypeface)
+	public void setTypeface(Typeface mTypeface)
 	{
 		this.mTypeface = mTypeface;
-		invalidate();
 	}
 
-	public Typeface getMTypeface()
+	public Typeface getTypeface()
 	{
 		return mTypeface;
 	}
 
-	public void setColor(int color)
+	public void setColor(int mColor)
 	{
-		this.color = color;
-		invalidate();
+		this.mColor = mColor;
 	}
 
 	public int getColor()
 	{
-		return color;
+		return mColor;
 	}
 
-	public void setStrokeWidth(int strokeWidth)
+	public void setStrokeWidth(int mStrokeWidth)
 	{
-		this.strokeWidth = strokeWidth;
-		invalidate();
+		this.mStrokeWidth = mStrokeWidth;
 	}
 
 	public int getStrokeWidth()
 	{
-		return strokeWidth;
+		return mStrokeWidth;
 	}
 
-	public void setTextSize(float textSize)
+	public void setTextSize(float mTextSize)
 	{
-		this.textSize = textSize;
-		invalidate();
+		this.mTextSize = mTextSize;
 	}
 
-	public void setText(String text)
+	public float getTextSize()
 	{
-		this.text = text;
-		invalidate();
+		return mTextSize;
 	}
 
-    public void init(AttributeSet attr)
+	public void setText(String mText)
+	{
+		this.mText = mText;
+	}
+
+	public String getText()
+	{
+		return mText;
+	}
+
+	public void setDuration(int mDuration)
+	{
+		this.mDuration = mDuration;
+	}
+
+	public int getDuration()
+	{
+		return mDuration;
+	}
+
+	public void init(AttributeSet attr)
     {
-		if(attr == null)return;
+		mPaint = new Paint();
+		mTypeface =  Typeface.MONOSPACE;
+		mColor = Color.parseColor("#f44336");
+		mStrokeWidth = 10;
+		mText = "Akash Yadav";
+		mTextSize = 150;
+		mDuration = 5000;
 		
-		Display display = ((Activity)getContext()).getWindowManager().getDefaultDisplay();
-		Point size = new Point();
-		display.getSize(size);
-		int width = size.x;
-		int height = size.y;
+		mPaint.setAntiAlias(true);
+		mPaint.setStyle(Paint.Style.STROKE);
 		
-		ta = getContext().obtainStyledAttributes(attr, R.styleable.AnimatedTextView);
-		color = ta.getColor(R.styleable.AnimatedTextView_atv_color, Color.parseColor("#f44336"));
-		strokeWidth = ta.getDimensionPixelSize(R.styleable.AnimatedTextView_atv_strokeWidth, 8);
-		String font = ta.getString(R.styleable.AnimatedTextView_atv_font);
-		
-		mTypeface =  null;
-		paint = new Paint();
-		if(!font.isEmpty())
+		if(attr != null)
 		{
-			mTypeface = FontManager.getInstance(getContext()).getFont(font);
-			if(mTypeface != null) paint.setTypeface(mTypeface);
+			mTypedArray = getContext().obtainStyledAttributes(attr, R.styleable.AnimatedTextView);
+			mColor = mTypedArray.getColor(R.styleable.AnimatedTextView_atv_color, mColor);
+			mStrokeWidth = mTypedArray.getDimensionPixelSize(R.styleable.AnimatedTextView_atv_strokeWidth, mStrokeWidth);
+			mText = mTypedArray.getText(R.styleable.AnimatedTextView_atv_text).toString();
+			mTextSize = mTypedArray.getDimension(R.styleable.AnimatedTextView_atv_textSize, mTextSize);
+			mDuration = mTypedArray.getInteger(R.styleable.AnimatedTextView_atv_duration, mDuration);
+			String font = mTypedArray.getString(R.styleable.AnimatedTextView_atv_font);
+
+			if(font != null)
+			{
+				mTypeface = FontManager.getInstance(getContext()).getFont(font);
+				if(mTypeface != null) mPaint.setTypeface(mTypeface);
+			}
 		}
 		
-		paint.setAntiAlias(true);
-		paint.setColor(color);
-		paint.setStyle(Paint.Style.STROKE);
-		paint.setTextSize(getTextSize());
-		paint.setStrokeWidth(strokeWidth);
-
-		midWidth = width/2;
-		midHeight = height/2;
-
-        animator = ObjectAnimator.ofFloat(AnimatedTextView.this, "phase", 1.0f, 0.0f);
-        animator.setDuration(8000);
-        animator.start();
+		start();
+		
     }
-
-	private float getTextSize()
+	
+	public void start()
 	{
-		textSize = ta.getDimension(R.styleable.AnimatedTextView_atv_textSize, 100);
-		return textSize;
+		mPaint.setColor(mColor);
+		mPaint.setTextSize(mTextSize);
+		mPaint.setStrokeWidth(mStrokeWidth);
+		mPaint.setTypeface(mTypeface);
+		mAnimator = ObjectAnimator.ofFloat(AnimatedTextView.this, "phase", 1.0f, 0.0f);
+		mAnimator.setDuration(mDuration);
+
+		if(!mAnimator.isRunning())
+		{
+			mAnimator.start();
+		}
 	}
 
     public void setPhase(float phase)
     {
-		paint.setPathEffect(createPathEffect(2000, phase, 0.0f));
+		mPaint.setPathEffect(createPathEffect(mPaint.measureText(mText), phase, 0.0f));
         invalidate();
 	}
 
@@ -152,15 +169,9 @@ public class AnimatedTextView extends View
     public void onDraw(Canvas c)
     {
         super.onDraw(c);
-		drawCenterText(c, paint, getText().toString());
+		drawCenterText(c, mPaint, mText);
     }
-	
-	private String getText()
-	{
-		text = ta.getString(R.styleable.AnimatedTextView_atv_text);
-		return text;
-	}
-	
+
 	private Rect r = new Rect();
 
 	private void drawCenterText(Canvas canvas, Paint paint, String text) {
@@ -172,6 +183,5 @@ public class AnimatedTextView extends View
 		float x = cWidth / 2f - r.width() / 2f - r.left;
 		float y = cHeight / 2f + r.height() / 2f - r.bottom;
 		canvas.drawText(text, x, y + 200, paint);
-		//setText(null);
 	}
 }

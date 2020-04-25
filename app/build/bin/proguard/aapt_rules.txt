@@ -1,0 +1,9 @@
+# view AndroidManifest.xml #generated:13
+-keep class app.app.AIDEApplication { <init>(...); }
+
+# view AndroidManifest.xml #generated:29
+-keep class app.app.DebugActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:20
+-keep class app.app.MainActivity { <init>(...); }
+

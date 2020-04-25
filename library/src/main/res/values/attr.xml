@@ -22,6 +22,10 @@
 				name="atv_textSize"
 				format="dimension"
 			/>
+			<attr
+				name="atv_duration"
+				format="integer"
+			/>
 		</declare-styleable>
 		
 	</resources>
