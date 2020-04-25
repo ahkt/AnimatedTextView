@@ -5,6 +5,7 @@ Simple library which draws Text with an Animation.
 
 [![](https://jitpack.io/v/itsaky/AnimatedTextView.svg)](https://jitpack.io/#itsaky/AnimatedTextView)
 
+
 Add to project's build.gradle
 ```
 maven { url 'https://jitpack.io' }
