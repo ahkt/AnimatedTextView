@@ -1,6 +1,10 @@
 # AnimatedText View
 Simple library which draws Text with an Animation.
 
+### Demo
+
+![](demo.gif)
+
 ### Dowload 
 
 [![](https://jitpack.io/v/itsaky/AnimatedTextView.svg)](https://jitpack.io/#itsaky/AnimatedTextView)
